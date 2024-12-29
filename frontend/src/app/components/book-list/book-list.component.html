@@ -1,0 +1,82 @@
+<div *ngIf="isLoading">
+  <div class="spinner">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <p class="text-center">Loading books data...</p>
+</div>
+<app-error-popup
+  *ngIf="showErrorPopup"
+  [message]="errorMessage"
+  [title]="popupTitle"
+  (close)="closeErrorPopup()"
+>
+</app-error-popup>
+<div class="container" *ngIf="!isLoading">
+  <h2>Book List</h2>
+  <div class="search-bar">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by Name of the Book"
+      [(ngModel)]="positionFilter"
+    />
+    <button class="btn btn-outline-primary" (click)="searchByName()">
+      Search
+    </button>
+    <button class="btn btn-outline-primary" (click)="resetSearch()">
+      Reset
+    </button>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>ISBN Number</th>
+        <th>Publication Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books">
+        <td>{{ book.id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.publicationDate }}</td>
+        <td>
+          <button
+            class="btn btn-outline-primary me-2"
+            (click)="editBook(book.id)"
+          >
+            Edit
+          </button>
+          <button class="btn btn-danger" (click)="deleteBook(book.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination-details">
+    <p>{{ books.length }} of {{ totalBooks }} books</p>
+    <input
+      type="number"
+      class="form-control"
+      style="margin: 0rem 0.5rem; width: auto; vertical-align: middle"
+      [(ngModel)]="pageSize"
+      min="5"
+    />
+    <button
+      class="btn btn-outline-primary align-middle"
+      (click)="loadMoreBooks()"
+    >
+      More
+    </button>
+  </div>
+</div>

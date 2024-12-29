@@ -1,0 +1,79 @@
+<app-error-popup
+  *ngIf="showErrorPopup"
+  [message]="errorMessage"
+  [title]="popupTitle"
+  (close)="closeErrorPopup()"
+>
+</app-error-popup>
+<div class="form-container">
+  <h1>Add Book</h1>
+  <form (ngSubmit)="addBook()" #bookForm="ngForm">
+    <div class="form-group mt-3">
+      <label for="name" class="form-label">Title of the Book</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        [(ngModel)]="book.title"
+        name="title"
+        #title="ngModel"
+        required
+      />
+      <div *ngIf="title.invalid && title.touched" class="error-message">
+        <small *ngIf="title.errors?.['required']">Title is required.</small>
+      </div>
+    </div>
+    <div class="form-group mt-3">
+      <label for="name">Author of the Book</label>
+      <input
+        type="text"
+        class="form-control"
+        id="author"
+        [(ngModel)]="book.author"
+        name="author"
+        #author="ngModel"
+        required
+      />
+      <div *ngIf="author.invalid && author.touched" class="error-message">
+        <small *ngIf="author.errors?.['required']">Author is required.</small>
+      </div>
+    </div>
+    <div class="form-group mt-3">
+      <label for="name">ISBN Number</label>
+      <input
+        type="text"
+        class="form-control"
+        id="isbn"
+        [(ngModel)]="book.isbn"
+        name="isbn"
+        #isbn="ngModel"
+        required
+      />
+      <div *ngIf="isbn.invalid && isbn.touched" class="error-message">
+        <small *ngIf="isbn.errors?.['required']"
+          >ISBN number is required.</small
+        >
+      </div>
+    </div>
+    <div class="form-group mt-3">
+      <label for="name">Publication Date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="date"
+        [(ngModel)]="book.publicationDate"
+        name="date"
+        #date="ngModel"
+        required
+      />
+      <div *ngIf="date.invalid && date.touched" class="error-message">
+        <small *ngIf="date.errors?.['required']"
+          >Publication Date is required.</small
+        >
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="bookForm.invalid">
+      Add Book
+    </button>
+  </form>
+</div>
